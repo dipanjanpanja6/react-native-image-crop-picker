@@ -137,6 +137,13 @@ declare module "react-native-image-crop-picker" {
          * @default true
          */
         writeTempFile?: boolean;
+        /**
+        * pass coustom dir path like '/images/1/'
+        *
+        * @platform android only
+        * @default ""
+        */
+        identifier?: string
     }
 
     type ImageOptions = CommonOptions & {
@@ -504,6 +511,7 @@ declare module "react-native-image-crop-picker" {
         openCropper(options: CropperOptions): Promise<Image>;
         clean(): Promise<void>;
         cleanSingle(path: string): Promise<void>;
+        getExternalDir(): string
     }
 
     const ImageCropPicker: ImageCropPicker;
