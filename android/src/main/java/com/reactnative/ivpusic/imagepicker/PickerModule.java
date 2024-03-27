@@ -120,6 +120,17 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         return tmpDir;
     }
 
+    @ReactMethod
+    public String getExternalDir() {
+        File externalDir = this.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES + this.identifier);
+    
+        if (!externalDir.exists() && !externalDir.isDirectory()) {
+          externalDir.mkdirs();
+        }
+    
+        return externalDir;
+    }
+
     @Override
     public String getName() {
         return "ImageCropPicker";
@@ -848,7 +859,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
             if (resultUri != null) {
                 try {
                     if (width > 0 && height > 0) {
-                        File resized = compression.resize(this.reactContext, resultUri.getPath(), width, height, width, height, 100);
+                        File resized = compression.resize(this.reactContext, resultUri.getPath(), width, height, width, height, 100, this.identifier);
                         resultUri = Uri.fromFile(resized);
                     }
 
