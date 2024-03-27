@@ -120,17 +120,6 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
         return tmpDir;
     }
 
-    @ReactMethod
-    public String getExternalDir() {
-        File externalDir = this.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES + this.identifier);
-    
-        if (!externalDir.exists() && !externalDir.isDirectory()) {
-          externalDir.mkdirs();
-        }
-    
-        return externalDir;
-    }
-
     @Override
     public String getName() {
         return "ImageCropPicker";
