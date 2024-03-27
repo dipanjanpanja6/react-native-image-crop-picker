@@ -173,10 +173,10 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
             @Override
             public Void call() {
                 try {
-                    File file = new File(module.getTmpDir(activity));
-                    if (!file.exists()) throw new Exception("File does not exist");
+                    File dirPath = module.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+                    if (!dirPath.exists()) throw new Exception("Picture dir does not exist");
 
-                    module.deleteRecursive(file);
+                    module.deleteRecursive(dirPath);
                     promise.resolve(null);
                 } catch (Exception ex) {
                     ex.printStackTrace();
