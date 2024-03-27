@@ -77,6 +77,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     private static final String E_NO_CAMERA_PERMISSION_MSG = "User did not grant camera permission.";
 
     private String mediaType = "any";
+    private String identifier = "";
     private boolean multiple = false;
     private boolean includeBase64 = false;
     private boolean includeExif = false;
@@ -126,6 +127,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
 
     private void setConfiguration(final ReadableMap options) {
         mediaType = options.hasKey("mediaType") ? options.getString("mediaType") : "any";
+        identifier = options.hasKey("identifier") ? options.getString("identifier") : "";
         multiple = options.hasKey("multiple") && options.getBoolean("multiple");
         includeBase64 = options.hasKey("includeBase64") && options.getBoolean("includeBase64");
         includeExif = options.hasKey("includeExif") && options.getBoolean("includeExif");
@@ -894,7 +896,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     private File createImageFile() throws IOException {
 
         String imageFileName = "image-" + UUID.randomUUID().toString();
-        File path = this.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File path = this.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES + this.identifier);
 
         if (!path.exists() && !path.isDirectory()) {
             path.mkdirs();
@@ -912,7 +914,7 @@ class PickerModule extends ReactContextBaseJavaModule implements ActivityEventLi
     private File createVideoFile() throws IOException {
 
         String videoFileName = "video-" + UUID.randomUUID().toString();
-        File path = this.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File path = this.reactContext.getExternalFilesDir(Environment.DIRECTORY_PICTURES + this.identifier);
 
         if (!path.exists() && !path.isDirectory()) {
             path.mkdirs();
