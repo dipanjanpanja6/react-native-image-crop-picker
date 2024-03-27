@@ -34,7 +34,8 @@ class Compression {
             int originalHeight,
             int maxWidth,
             int maxHeight,
-            int quality
+            int quality,
+            String identifier
     ) throws IOException {
         Pair<Integer, Integer> targetDimensions =
                 this.calculateTargetDimensions(originalWidth, originalHeight, maxWidth, maxHeight);
@@ -57,7 +58,7 @@ class Compression {
 
         bitmap = Bitmap.createScaledBitmap(bitmap, targetWidth, targetHeight, true);
 
-        File imageDirectory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File imageDirectory = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES + identifier);
 
         if (!imageDirectory.exists()) {
             Log.d("image-crop-picker", "Pictures Directory is not existing. Will create this directory.");
@@ -109,6 +110,7 @@ class Compression {
         Integer maxWidth = options.hasKey("compressImageMaxWidth") ? options.getInt("compressImageMaxWidth") : null;
         Integer maxHeight = options.hasKey("compressImageMaxHeight") ? options.getInt("compressImageMaxHeight") : null;
         Double quality = options.hasKey("compressImageQuality") ? options.getDouble("compressImageQuality") : null;
+        String identifier = options.hasKey("identifier") ? options.getString("identifier") : "";
 
         boolean isLossLess = (quality == null || quality == 1.0);
         boolean useOriginalWidth = (maxWidth == null || maxWidth >= bitmapOptions.outWidth);
@@ -131,7 +133,7 @@ class Compression {
         if (maxWidth == null) maxWidth = bitmapOptions.outWidth;
         if (maxHeight == null) maxHeight = bitmapOptions.outHeight;
 
-        return resize(context, originalImagePath, bitmapOptions.outWidth, bitmapOptions.outHeight, maxWidth, maxHeight, targetQuality);
+        return resize(context, originalImagePath, bitmapOptions.outWidth, bitmapOptions.outHeight, maxWidth, maxHeight, targetQuality, identifier);
     }
 
     private Pair<Integer, Integer> calculateTargetDimensions(int currentWidth, int currentHeight, int maxWidth, int maxHeight) {
