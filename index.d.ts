@@ -511,7 +511,6 @@ declare module "react-native-image-crop-picker" {
         openCropper(options: CropperOptions): Promise<Image>;
         clean(): Promise<void>;
         cleanSingle(path: string): Promise<void>;
-        getExternalDir(): string
     }
 
     const ImageCropPicker: ImageCropPicker;
